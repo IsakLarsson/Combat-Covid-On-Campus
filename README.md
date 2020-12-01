@@ -1,4 +1,4 @@
-#Combat COVID-19 on campus
+# Combat COVID-19 on campus
 
 This project aims to combat covid on Umeå University campus by using data collected from LoRa sensors placed around campus
 
