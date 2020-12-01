@@ -1,3 +1,8 @@
+#Combat COVID-19 on campus
+
+This project aims to combat covid on Umeå University campus by using data collected from LoRa sensors placed around campus
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
