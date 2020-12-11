@@ -24,7 +24,7 @@ function App() {
       map.on("load", () => {
         map.addSource("heatpoints", {
           type: "geojson",
-          data: heatdata,
+          data: generateJson(),
         });
 
         map.addLayer({
@@ -83,6 +83,44 @@ function App() {
     };
     campusInfo();
   }, []);
+
+  const generateJson = () => {
+    let startLat = 20.30711;
+    let startLong = 63.820009;
+
+    let featureCollection = {};
+    featureCollection.type = "FeatureCollection";
+    featureCollection.features = [];
+
+    for (let i = 0; i < 50; i++) {
+      startLong = startLong - 0.00002;
+      let feature = {};
+      feature.type = "Feature";
+      feature.geometry = {
+        type: "Point",
+        coordinates: [20.30711, startLong],
+      };
+      featureCollection.features.push(feature);
+      if (i % 2 === 0) {
+        for (let j = 0; j < 40; j++) {
+          let latVariance = Math.random() * 0.000025;
+          let longVariance = Math.random() * 0.00002;
+          latVariance *= Math.round(Math.random()) ? 1 : -1;
+          longVariance *= Math.round(Math.random()) ? 1 : -1;
+
+          let feature = {};
+          feature.geometry = {
+            type: "Point",
+            coordinates: [startLat + latVariance, startLong + longVariance],
+          };
+          featureCollection.features.push(feature);
+        }
+      }
+    }
+
+    console.log(featureCollection);
+    return featureCollection;
+  };
 
   return (
     <div className="App">
