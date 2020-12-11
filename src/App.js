@@ -3,9 +3,15 @@ import "./App.css";
 import { useEffect } from "react";
 import heatdata from "./heatpoints_single.geojson";
 
+const axios = require("axios");
+
 function App() {
   useEffect(() => {
     const campusInfo = async () => {
+      let response = await axios.get("http://localhost:1880/sensors");
+      console.log(JSON.parse(response.data.replace(/&quot;/g, '"')));
+      let parsedRespones = JSON.parse(response.data.replace(/&quot;/g, '"'));
+
       var map = new window.Mazemap.Map({
         // container id specified in the HTML
         container: "map",
@@ -24,7 +30,7 @@ function App() {
       map.on("load", () => {
         map.addSource("heatpoints", {
           type: "geojson",
-          data: generateJson(),
+          data: generateJson(parsedRespones),
         });
 
         map.addLayer({
@@ -84,7 +90,7 @@ function App() {
     campusInfo();
   }, []);
 
-  const generateJson = () => {
+  const generateJson = (parsedRespones) => {
     let startLat = 20.30711;
     let startLong = 63.820009;
 
@@ -92,33 +98,25 @@ function App() {
     featureCollection.type = "FeatureCollection";
     featureCollection.features = [];
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < parsedRespones.data.length; i++) {
       startLong = startLong - 0.00002;
-      let feature = {};
-      feature.type = "Feature";
-      feature.geometry = {
-        type: "Point",
-        coordinates: [20.30711, startLong],
-      };
-      featureCollection.features.push(feature);
-      if (i % 2 === 0) {
-        for (let j = 0; j < 40; j++) {
-          let latVariance = Math.random() * 0.000025;
-          let longVariance = Math.random() * 0.00002;
-          latVariance *= Math.round(Math.random()) ? 1 : -1;
-          longVariance *= Math.round(Math.random()) ? 1 : -1;
 
-          let feature = {};
-          feature.geometry = {
-            type: "Point",
-            coordinates: [startLat + latVariance, startLong + longVariance],
-          };
-          featureCollection.features.push(feature);
-        }
+      for (let j = 0; j < parsedRespones.data[i].dd.pir; j++) {
+        let latVariance = Math.random() * 0.000025;
+        let longVariance = Math.random() * 0.00002;
+        latVariance *= Math.round(Math.random()) ? 1 : -1;
+        longVariance *= Math.round(Math.random()) ? 1 : -1;
+
+        let feature = {};
+        feature.geometry = {
+          type: "Point",
+          coordinates: [startLat + latVariance, startLong + longVariance],
+        };
+        featureCollection.features.push(feature);
       }
     }
 
-    console.log(featureCollection);
+    // console.log(featureCollection);
     return featureCollection;
   };
 
