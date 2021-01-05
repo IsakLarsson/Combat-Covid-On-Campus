@@ -4,7 +4,7 @@ import { Button, InputBase, Typography } from '@material-ui/core';
 import Umulogo from '../images/umu.png';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   loginButton: {
     '@media only screen and (max-width: 768px)': {
-      backgroundColor: '#2672EC',
+      backgroundColor: '#2672EC!important',
       color: '#fff',
       borderRadius: '0',
       width: '86px',
