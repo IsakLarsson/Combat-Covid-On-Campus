@@ -1,62 +1,68 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
-import QrScan from '../images/qrscan.png';
-import CheckinCard from '../components/CheckinCard';
-import MenuBouble from '../components/MenuBouble';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box, Typography } from "@material-ui/core";
+import QrScan from "../images/qrscan.png";
+import CheckinCard from "../components/CheckinCard";
+import MenuBouble from "../components/MenuBouble";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#BAD6C5',
+    backgroundColor: "#BAD6C5",
   },
   content: {
-    '@media only screen and (max-width: 768px)': {
-      display: 'flex',
-      flexDirection: 'column',
+    "@media only screen and (max-width: 768px)": {
+      display: "flex",
+      flexDirection: "column",
 
-      height: '100vh',
-      margin: '0 30px',
-      overflowX: 'hidden',
-      backgroundColor: '#BAD6C5',
-      alignItems: 'center',
+      height: "100vh",
+      margin: "0 30px",
+      overflowX: "hidden",
+      backgroundColor: "#BAD6C5",
+      alignItems: "center",
     },
   },
   checkButton: {
-    '@media only screen and (max-width: 768px)': {
-      height: '250px',
-      width: '250px',
-      backgroundColor: '#F8F8F8',
-      borderRadius: '20px',
-      marginTop: '50px',
-      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+    "@media only screen and (max-width: 768px)": {
+      height: "250px",
+      width: "250px",
+      backgroundColor: "#F8F8F8",
+      borderRadius: "20px",
+      marginTop: "50px",
+      boxShadow:
+        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
     },
   },
   checkText: {
-    fontWeight: '500',
-    fontSize: '1.3em',
-    marginTop: '10px',
+    fontWeight: "500",
+    fontSize: "1.3em",
+    marginTop: "10px",
   },
   list: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'left',
-    width: '90%',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "90%",
   },
   header: {
-    marginTop: '50px',
-    fontSize: '1.7em',
+    marginTop: "50px",
+    fontSize: "1.7em",
   },
 }));
 const CheckIn = () => {
   const classes = useStyles();
-  const [checkins, setCheckins] = useState([{ zone: 'Naturhuset zon 5', day: 'Måndag', time: '8.15' }]);
+  const [checkins, setCheckins] = useState([
+    { zone: "Naturhuset zon 5", day: "Måndag", time: "8.15" },
+  ]);
 
   const checkIn = () => {
-    setCheckins((checkins) => [...checkins, { zone: 'Naturhuset zon 5', day: 'Måndag', time: '8.15' }]);
+    setCheckins((checkins) => [
+      ...checkins,
+      { zone: "Naturhuset zon 5", day: "Måndag", time: "8.15" },
+    ]);
     console.log(checkins);
   };
   const checkOut = () => {
