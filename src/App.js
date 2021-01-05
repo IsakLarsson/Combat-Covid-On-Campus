@@ -3,9 +3,15 @@ import "./App.css";
 import { useEffect } from "react";
 import heatdata from "./heatpoints_single.geojson";
 
+const axios = require("axios");
+
 function App() {
   useEffect(() => {
     const campusInfo = async () => {
+      let response = await axios.get("http://localhost:1880/sensors");
+      console.log(JSON.parse(response.data.replace(/&quot;/g, '"')));
+      let parsedRespones = JSON.parse(response.data.replace(/&quot;/g, '"'));
+      console.log(parsedRespones);
       var map = new window.Mazemap.Map({
         // container id specified in the HTML
         container: "map",
@@ -18,13 +24,13 @@ function App() {
         // initial zoom
         zoom: 18,
 
-        zLevel: 3,
+        zLevel: 2,
       });
 
       map.on("load", () => {
         map.addSource("heatpoints", {
           type: "geojson",
-          data: generateJson(),
+          data: generateJson(parsedRespones),
         });
 
         map.addLayer({
@@ -80,45 +86,54 @@ function App() {
           },
         });
       });
+      map.on("click", onMapClick);
     };
     campusInfo();
   }, []);
 
-  const generateJson = () => {
-    let startLat = 20.30711;
-    let startLong = 63.820009;
+  const onMapClick = (e) => {
+    var lngLat = e.lngLat;
+
+    console.log(lngLat);
+  };
+
+  const generateJson = (parsedRespones) => {
+    const coordinateArr = [
+      { lng: 20.308349705835496, lat: 63.81900592551949 },
+      { lng: 20.308192882367734, lat: 63.81900568662371 },
+      { lng: 20.307978380978028, lat: 63.81900697599215 },
+      { lng: 20.307055316506563, lat: 63.81906415884902 },
+      { lng: 20.30706140226104, lat: 63.81923733767948 },
+      { lng: 20.307065643789542, lat: 63.81931117656464 },
+      { lng: 20.30707299349453, lat: 63.81950588172853 },
+      { lng: 20.3070748958213, lat: 63.81956184331548 },
+      { lng: 20.306956961518694, lat: 63.81952031622194 },
+      { lng: 20.307181110854373, lat: 63.81968109837368 },
+    ];
 
     let featureCollection = {};
     featureCollection.type = "FeatureCollection";
     featureCollection.features = [];
 
-    for (let i = 0; i < 50; i++) {
-      startLong = startLong - 0.00002;
-      let feature = {};
-      feature.type = "Feature";
-      feature.geometry = {
-        type: "Point",
-        coordinates: [20.30711, startLong],
-      };
-      featureCollection.features.push(feature);
-      if (i % 2 === 0) {
-        for (let j = 0; j < 40; j++) {
-          let latVariance = Math.random() * 0.000025;
-          let longVariance = Math.random() * 0.00002;
+    coordinateArr.map((coord, i) => {
+      if (parsedRespones.data[i] !== null) {
+        for (let j = 0; j < parsedRespones.data[i].dd.pir; j++) {
+          let latVariance = Math.random() * 0.000019;
+          let longVariance = Math.random() * 0.000022;
           latVariance *= Math.round(Math.random()) ? 1 : -1;
           longVariance *= Math.round(Math.random()) ? 1 : -1;
 
           let feature = {};
           feature.geometry = {
             type: "Point",
-            coordinates: [startLat + latVariance, startLong + longVariance],
+            coordinates: [coord.lng + longVariance, coord.lat + latVariance],
           };
           featureCollection.features.push(feature);
         }
       }
-    }
+    });
 
-    console.log(featureCollection);
+    // console.log(featureCollection);
     return featureCollection;
   };
 
