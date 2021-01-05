@@ -1,0 +1,30 @@
+.mapboxgl-canvas {
+  position: relative !important;
+}
+
+#map {
+  top: 100px;
+  height: 92vh;
+  /* Alla ändringar för mapen här */
+}
+
+.headerWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.header {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  font-weight: 500;
+  color: #296c96;
+  font-size: 1.5rem;
+}
+
+.paragraph {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  margin-top: 0px;
+  color: #296c96;
+  font-size: 1.2rem;
+}

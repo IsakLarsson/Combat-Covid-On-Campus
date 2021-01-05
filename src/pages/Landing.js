@@ -40,7 +40,7 @@ const Landing = () => {
         <h1 className="green">Safe</h1>
         <h1 className="blue">Study</h1>
       </div>
-      <p>Study without worries!</p>
+      <p className="para">Study without worries!</p>
       <Button
         onClick={handleClick}
         variant="contained"

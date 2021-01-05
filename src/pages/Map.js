@@ -1,8 +1,11 @@
-import "../App.css";
+import "./Map.css";
 import { useEffect } from "react";
+import { useState } from "react";
 const axios = require("axios");
 
 function Map() {
+  const [time, setTime] = useState("");
+
   useEffect(() => {
     const campusInfo = async () => {
       let response = await axios.get("http://localhost:1880/sensors");
@@ -127,6 +130,8 @@ function Map() {
           };
           featureCollection.features.push(feature);
         }
+        console.log(parsedRespones.data[i].time);
+        setTime(parsedRespones.data[i].time);
       }
     });
 
@@ -136,7 +141,11 @@ function Map() {
 
   return (
     <div className="App">
-      <div id="map" className="mazemap" style={{ width: "100%" }}></div>
+      <div className="headerContainer">
+        <h1 className="header">Last updated:</h1>
+        <p className="paragraph">{time}</p>
+      </div>
+      <div id="map" className="mazemap"></div>
     </div>
   );
 }
