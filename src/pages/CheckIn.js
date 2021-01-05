@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   list: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left',
+    alignItems: 'center',
     width: '90%',
   },
   header: {
