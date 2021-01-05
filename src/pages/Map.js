@@ -1,20 +1,21 @@
-import "./Map.css";
-import { useEffect } from "react";
-import { useState } from "react";
-const axios = require("axios");
+import './Map.css';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import MenuBouble from '../components/MenuBouble';
+const axios = require('axios');
 
 function Map() {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState('');
 
   useEffect(() => {
     const campusInfo = async () => {
-      let response = await axios.get("http://localhost:1880/sensors");
+      let response = await axios.get('http://localhost:1880/sensors');
       console.log(JSON.parse(response.data.replace(/&quot;/g, '"')));
       let parsedRespones = JSON.parse(response.data.replace(/&quot;/g, '"'));
       console.log(parsedRespones);
       var map = new window.Mazemap.Map({
         // container id specified in the HTML
-        container: "map",
+        container: 'map',
 
         campuses: 289, //UMEÅ CAMPUS ID 289
 
@@ -27,66 +28,50 @@ function Map() {
         zLevel: 2,
       });
 
-      map.on("load", () => {
-        map.addSource("heatpoints", {
-          type: "geojson",
+      map.on('load', () => {
+        map.addSource('heatpoints', {
+          type: 'geojson',
           data: generateJson(parsedRespones),
         });
 
         map.addLayer({
-          id: "heatpoints",
-          type: "heatmap",
-          source: "heatpoints",
+          id: 'heatpoints',
+          type: 'heatmap',
+          source: 'heatpoints',
           maxzoom: 24,
           paint: {
             // Increase the heatmap weight based on frequency and property magnitude
-            "heatmap-weight": 1,
+            'heatmap-weight': 1,
             // Increase the heatmap color weight weight by zoom level
             // heatmap-intensity is a multiplier on top of heatmap-weight
-            "heatmap-intensity": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              16,
-              0.2,
-              22,
-              1,
-            ],
+            'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 16, 0.2, 22, 1],
             // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
             // Begin color ramp at 0-stop with a 0-transparancy color
             // to create a blur-like effect.
-            "heatmap-color": [
-              "interpolate",
-              ["linear"],
-              ["heatmap-density"],
+            'heatmap-color': [
+              'interpolate',
+              ['linear'],
+              ['heatmap-density'],
               0,
-              "rgba(0,0,255,0)",
+              'rgba(0,0,255,0)',
               0.2,
-              "#1FAFFC",
+              '#1FAFFC',
               0.4,
-              "#5BD76F",
+              '#5BD76F',
               0.6,
-              "#FFE61E",
+              '#FFE61E',
               0.8,
-              "#FF7B00",
+              '#FF7B00',
               1,
-              "#FF3333",
+              '#FF3333',
             ],
             // Adjust the heatmap radius by zoom level
-            "heatmap-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              10,
-              5,
-              22,
-              30,
-            ],
-            "heatmap-opacity": 0.8,
+            'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 22, 30],
+            'heatmap-opacity': 0.8,
           },
         });
       });
-      map.on("click", onMapClick);
+      map.on('click', onMapClick);
     };
     campusInfo();
   }, []);
@@ -112,7 +97,7 @@ function Map() {
     ];
 
     let featureCollection = {};
-    featureCollection.type = "FeatureCollection";
+    featureCollection.type = 'FeatureCollection';
     featureCollection.features = [];
 
     coordinateArr.map((coord, i) => {
@@ -125,7 +110,7 @@ function Map() {
 
           let feature = {};
           feature.geometry = {
-            type: "Point",
+            type: 'Point',
             coordinates: [coord.lng + longVariance, coord.lat + latVariance],
           };
           featureCollection.features.push(feature);
@@ -146,6 +131,7 @@ function Map() {
         <p className="paragraph">{time}</p>
       </div>
       <div id="map" className="mazemap"></div>
+      <MenuBouble />
     </div>
   );
 }

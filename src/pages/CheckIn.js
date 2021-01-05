@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
       width: '250px',
       backgroundColor: '#F8F8F8',
       borderRadius: '20px',
-      marginTop: '200px',
+      marginTop: '50px',
       boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
       display: 'flex',
       flexDirection: 'column',
