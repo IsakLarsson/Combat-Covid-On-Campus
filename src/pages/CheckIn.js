@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import QrScan from '../images/qrscan.png';
 import CheckinCard from '../components/CheckinCard';
-
+import MenuBouble from '../components/MenuBouble';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +79,7 @@ const CheckIn = () => {
           ))}
         </Box>
       </Box>
+      <MenuBouble></MenuBouble>
     </div>
   );
 };
