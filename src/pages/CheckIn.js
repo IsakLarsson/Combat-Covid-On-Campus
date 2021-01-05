@@ -4,6 +4,7 @@ import { Box, Typography } from '@material-ui/core';
 import QrScan from '../images/qrscan.png';
 import CheckinCard from '../components/CheckinCard';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: '#BAD6C5',
